@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Idol Boat Charters | Lake Norman, NC</title>
+  <meta name="description" content="Premium boat charters on Lake Norman, NC. Tubing, wakeboarding, sightseeing, dinner cruises, parties & fishing. Up to 15 guests." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0a1628;
+      --blue:   #0e3a5c;
+      --gold:   #f0a500;
+      --amber:  #e07b1a;
+      --tan:    #c4894a;
+      --white:  #ffffff;
+      --off:    #f4f1ec;
+      --gray:   #8a97a8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: linear-gradient(to bottom, rgba(10,22,40,.92), transparent);
+      backdrop-filter: blur(6px);
+      transition: background .3s;
+    }
+    nav.scrolled { background: rgba(10,22,40,.97); }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      letter-spacing: .04em;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,.82);
+      text-decoration: none;
+      font-size: .9rem;
+      font-weight: 500;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-cta {
+      background: var(--gold);
+      color: var(--navy) !important;
+      padding: .5rem 1.3rem;
+      border-radius: 4px;
+      font-weight: 600 !important;
+    }
+    .nav-cta:hover { background: var(--amber); color: var(--white) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 100vh; min-height: 640px;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero-slides { position: absolute; inset: 0; }
+    .hero-slide {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      opacity: 0;
+      transition: opacity 1.6s ease;
+    }
+    .hero-slide.active { opacity: 1; }
+
+    .hero-slide:nth-child(1) { background-image: url('images/sunset.jpeg'); }
+    .hero-slide:nth-child(2) { background-image: url('images/boat-night.jpeg'); }
+    .hero-slide:nth-child(3) { background-image: url('images/boat-interior.jpeg'); }
+
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, rgba(10,22,40,.65) 0%, rgba(10,22,40,.35) 50%, rgba(10,22,40,.75) 100%);
+    }
+
+    .hero-content { position: relative; z-index: 2; padding: 1rem; }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: .78rem; font-weight: 600;
+      letter-spacing: .22em; text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 7vw, 5.6rem);
+      line-height: 1.08;
+      margin-bottom: 1.2rem;
+      text-shadow: 0 2px 24px rgba(0,0,0,.5);
+    }
+    .hero h1 em { font-style: normal; color: var(--gold); }
+
+    .hero p {
+      font-size: clamp(1rem, 2.2vw, 1.2rem);
+      color: rgba(255,255,255,.88);
+      max-width: 560px;
+      margin: 0 auto 2.2rem;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    .btn-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: .95rem;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      padding: .9rem 2.2rem;
+      border-radius: 4px;
+      transition: background .2s, transform .15s;
+    }
+    .btn-primary:hover { background: var(--amber); color: var(--white); transform: translateY(-2px); }
+
+    .btn-outline {
+      display: inline-block;
+      border: 2px solid rgba(255,255,255,.65);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: .95rem;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      padding: .85rem 2rem;
+      border-radius: 4px;
+      transition: border-color .2s, color .2s, transform .15s;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+    .hero-scroll {
+      position: absolute; bottom: 2.4rem; left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: .5rem;
+      color: rgba(255,255,255,.5);
+      font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
+    }
+    .hero-scroll::after {
+      content: '';
+      display: block; width: 1px; height: 42px;
+      background: linear-gradient(to bottom, rgba(255,255,255,.4), transparent);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+    @keyframes scrollLine { 0%,100%{opacity:.3;transform:scaleY(.6)translateY(-4px)}50%{opacity:1;transform:scaleY(1)translateY(4px)} }
+
+    /* ── SECTION COMMONS ── */
+    section { padding: 7rem 2rem; }
+    .section-inner { max-width: 1160px; margin: 0 auto; }
+
+    .section-tag {
+      font-size: .72rem; font-weight: 700;
+      letter-spacing: .24em; text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: .75rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+    }
+
+    .section-sub {
+      color: var(--gray);
+      font-size: 1.05rem;
+      line-height: 1.75;
+      max-width: 620px;
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      background: var(--gold);
+      padding: 2.2rem 2rem;
+    }
+    .stats-inner {
+      max-width: 1160px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 2rem;
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      color: var(--navy);
+      font-weight: 700;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: .8rem; font-weight: 600;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: rgba(10,22,40,.72);
+      margin-top: .3rem;
+    }
+
+    /* ── SERVICES ── */
+    #services { background: #0d1e33; }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 1.6rem;
+      margin-top: 3.5rem;
+    }
+
+    .service-card {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+      padding: 2rem 1.8rem;
+      transition: border-color .3s, transform .25s, background .3s;
+    }
+    .service-card:hover {
+      border-color: var(--gold);
+      background: rgba(240,165,0,.06);
+      transform: translateY(-4px);
+    }
+
+    .service-icon {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .service-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      margin-bottom: .6rem;
+    }
+
+    .service-card p {
+      color: var(--gray);
+      font-size: .92rem;
+      line-height: 1.7;
+    }
+
+    /* ── FEATURES ── */
+    #features { background: var(--navy); }
+
+    .features-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      margin-top: 3rem;
+    }
+
+    .features-img-stack {
+      position: relative;
+      height: 520px;
+    }
+    .features-img-stack img {
+      position: absolute;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+    .fi-main {
+      width: 78%; height: 74%;
+      top: 0; left: 0;
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    }
+    .fi-accent {
+      width: 52%; height: 50%;
+      bottom: 0; right: 0;
+      box-shadow: 0 16px 40px rgba(0,0,0,.5);
+      border: 3px solid var(--navy);
+    }
+
+    .feature-list { list-style: none; margin-top: 2rem; display: flex; flex-direction: column; gap: 1.1rem; }
+    .feature-list li {
+      display: flex; gap: 1rem; align-items: flex-start;
+      font-size: .96rem; color: rgba(255,255,255,.85); line-height: 1.6;
+    }
+    .feature-list li::before {
+      content: '✦';
+      color: var(--gold);
+      font-size: .85rem;
+      flex-shrink: 0;
+      margin-top: .2rem;
+    }
+
+    /* ── GALLERY ── */
+    #gallery { background: #0d1e33; padding-bottom: 5rem; }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: auto;
+      gap: 12px;
+      margin-top: 3rem;
+    }
+
+    .gallery-grid img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+      transition: transform .4s ease, filter .4s;
+      filter: brightness(.9);
+      display: block;
+    }
+    .gallery-grid img:hover { transform: scale(1.025); filter: brightness(1.05); }
+
+    .g1 { grid-column: span 7; grid-row: span 2; height: 460px; }
+    .g2 { grid-column: span 5; height: 222px; }
+    .g3 { grid-column: span 5; height: 222px; }
+    .g4 { grid-column: span 6; height: 300px; }
+    .g5 { grid-column: span 6; height: 300px; }
+
+    /* ── MASCOT ── */
+    .mascot-strip {
+      background: linear-gradient(135deg, #0e3a5c 0%, #1a4a7a 100%);
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+    .mascot-strip img {
+      width: 220px; height: 220px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid var(--gold);
+      margin-bottom: 1.8rem;
+      box-shadow: 0 0 40px rgba(240,165,0,.25);
+    }
+    .mascot-strip h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem;
+      margin-bottom: .6rem;
+    }
+    .mascot-strip p { color: rgba(255,255,255,.75); max-width: 480px; margin: 0 auto; line-height: 1.7; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--navy); }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 5rem;
+      align-items: start;
+      margin-top: 3rem;
+    }
+
+    .contact-info { display: flex; flex-direction: column; gap: 1.8rem; }
+
+    .contact-item { display: flex; gap: 1rem; align-items: flex-start; }
+    .contact-icon {
+      width: 44px; height: 44px;
+      background: rgba(240,165,0,.12);
+      border: 1px solid rgba(240,165,0,.3);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .contact-item-text strong { display: block; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); margin-bottom: .2rem; }
+    .contact-item-text span { color: rgba(255,255,255,.8); font-size: .97rem; }
+    .contact-item-text a { color: rgba(255,255,255,.8); text-decoration: none; }
+    .contact-item-text a:hover { color: var(--gold); }
+
+    .contact-form {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 14px;
+      padding: 2.5rem;
+    }
+    .contact-form h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: .45rem; margin-bottom: 1.1rem; }
+    .form-group label { font-size: .8rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--gray); }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 6px;
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: .95rem;
+      padding: .75rem 1rem;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--gold); }
+    .form-group select option { background: #1a2e4a; }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-submit {
+      width: 100%;
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      border-radius: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: .95rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: .95rem;
+      cursor: pointer;
+      transition: background .2s, transform .15s;
+    }
+    .form-submit:hover { background: var(--amber); color: var(--white); transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #06101e;
+      padding: 3rem 2rem;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,.07);
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: .5rem;
+    }
+    .footer-logo span { color: var(--gold); }
+    footer p { color: var(--gray); font-size: .85rem; margin-top: .4rem; }
+    .footer-links { display: flex; gap: 1.5rem; justify-content: center; margin-top: 1.2rem; }
+    .footer-links a { color: var(--gray); text-decoration: none; font-size: .85rem; transition: color .2s; }
+    .footer-links a:hover { color: var(--gold); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .features-layout { grid-template-columns: 1fr; }
+      .features-img-stack { height: 340px; }
+      .contact-layout { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 700px) {
+      .g1 { grid-column: span 12; height: 280px; }
+      .g2,.g3 { grid-column: span 12; height: 220px; }
+      .g4,.g5 { grid-column: span 12; height: 220px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Idol<span>Boat</span>Charters</a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#features">The Boat</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#contact" class="nav-cta">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="home">
+  <div class="hero-slides">
+    <div class="hero-slide active"></div>
+    <div class="hero-slide"></div>
+    <div class="hero-slide"></div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow">Lake Norman, North Carolina</span>
+    <h1>Your <em>Perfect Day</em><br>Starts on the Water</h1>
+    <p>Private boat charters for every occasion — tubing, wakeboarding, sunset cruises, parties, and more. Up to 15 guests.</p>
+    <div class="btn-row">
+      <a href="#contact" class="btn-primary">Book a Charter</a>
+      <a href="#services" class="btn-outline">Our Services</a>
+    </div>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- ── STATS BAR ── -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div>
+      <div class="stat-num">15</div>
+      <div class="stat-label">Max Guests</div>
+    </div>
+    <div>
+      <div class="stat-num">6</div>
+      <div class="stat-label">Tube at Once</div>
+    </div>
+    <div>
+      <div class="stat-num">6+</div>
+      <div class="stat-label">Activities</div>
+    </div>
+    <div>
+      <div class="stat-num">1</div>
+      <div class="stat-label">Lake. All Yours.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SERVICES ── -->
+<section id="services">
+  <div class="section-inner">
+    <p class="section-tag">What We Offer</p>
+    <h2 class="section-title">Every Kind of Lake Day</h2>
+    <p class="section-sub">Whether you're chasing thrills or chasing sunsets, we've got the perfect charter for your crew.</p>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="service-icon">🏄</span>
+        <h3>Wakeboarding</h3>
+        <p>Hit the wake with a pro-ready tow. Perfect for beginners and experienced riders looking to dial in new tricks.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🍩</span>
+        <h3>Tubing</h3>
+        <p>Up to 6 riders at a time — hold on tight! Great for families, friend groups, and anyone who loves a little chaos.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🌅</span>
+        <h3>Sightseeing Cruises</h3>
+        <p>Take in the stunning shores of Lake Norman at your own pace. Perfect for visitors and locals alike.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🥂</span>
+        <h3>Parties & Events</h3>
+        <p>Birthdays, bachelorettes, team outings — make any celebration unforgettable out on the water.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🍽️</span>
+        <h3>Dinner Cruises</h3>
+        <p>Drift across the lake under the stars with your favorite food and drinks. The ultimate evening experience.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🎣</span>
+        <h3>Fishing Charters</h3>
+        <p>Lake Norman is loaded with bass and catfish. Drop a line and enjoy a relaxed morning or afternoon on the water.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURES ── -->
+<section id="features">
+  <div class="section-inner">
+    <div class="features-layout">
+      <div class="features-img-stack">
+        <img class="fi-main" src="images/boat-interior.jpeg" alt="Luxury boat interior with tan leather seating on Lake Norman" />
+        <img class="fi-accent" src="images/boat-lake.jpeg" alt="View from the back of the boat looking out over Lake Norman" />
+      </div>
+
+      <div>
+        <p class="section-tag">The Boat</p>
+        <h2 class="section-title">Premium Comfort,<br>Built for Adventure</h2>
+        <p class="section-sub">Our luxury wake boat is fully equipped for a day of thrills or a night of relaxation — no detail overlooked.</p>
+
+        <ul class="feature-list">
+          <li>Plush tan leather seating throughout — room for up to 15 guests</li>
+          <li>Wakeboard tower with premium speakers for the perfect soundtrack</li>
+          <li>Tube 6 riders at a time off the back — hold on tight</li>
+          <li>Swim platform with electric stairs so no one gets left behind</li>
+          <li>Dock at the islands and enjoy some peaceful quiet time ashore</li>
+          <li>RGB LED accent lighting for unforgettable night rides</li>
+          <li>TV mount on board — catch the game while you cruise the lake</li>
+          <li>Cup holders, boarding ladder, and everything you need for a full day out</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── GALLERY ── -->
+<section id="gallery">
+  <div class="section-inner">
+    <p class="section-tag">Gallery</p>
+    <h2 class="section-title">Life on Lake Norman</h2>
+
+    <div class="gallery-grid">
+      <img class="g1" src="images/sunset.jpeg" alt="Dramatic golden sunset over Lake Norman" />
+      <img class="g2" src="images/boat-interior.jpeg" alt="Luxury boat interior" />
+      <img class="g3" src="images/boat-lake.jpeg" alt="Back deck view of Lake Norman" />
+      <img class="g4" src="images/boat-night.jpeg" alt="Night cruise with blue LED lights and full moon" />
+      <img class="g5" src="images/dog.jpeg" alt="Our mascot in a shark life jacket" />
+    </div>
+  </div>
+</section>
+
+<!-- ── MASCOT ── -->
+<div class="mascot-strip">
+  <img src="images/dog.jpeg" alt="A dog in a life jacket enjoying a day on Lake Norman" />
+  <h3>Pets Welcome on Board</h3>
+  <p>Your four-legged family members are always welcome. Life jackets provided — just bring the good vibes.</p>
+</div>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="section-inner">
+    <p class="section-tag">Get in Touch</p>
+    <h2 class="section-title">Ready to Book?</h2>
+
+    <div class="contact-layout">
+      <div class="contact-info">
+        <p class="section-sub">Reach out to reserve your charter date. We'll get back to you quickly to confirm availability and details.</p>
+
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div class="contact-item-text">
+            <strong>Location</strong>
+            <span>Lake Norman, North Carolina</span>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div class="contact-item-text">
+            <strong>Email</strong>
+            <a href="mailto:davididol@idolboatcharters.com">davididol@idolboatcharters.com</a>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">👥</div>
+          <div class="contact-item-text">
+            <strong>Capacity</strong>
+            <span>Up to 15 guests per charter</span>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">📅</div>
+          <div class="contact-item-text">
+            <strong>Season</strong>
+            <span>Spring through Fall — weekdays &amp; weekends</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <h3>Request a Charter</h3>
+        <form action="mailto:davididol@idolboatcharters.com" method="POST" enctype="text/plain">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">First Name</label>
+              <input type="text" id="fname" name="first_name" placeholder="David" required />
+            </div>
+            <div class="form-group">
+              <label for="lname">Last Name</label>
+              <input type="text" id="lname" name="last_name" placeholder="Smith" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="guests">Guests</label>
+              <select id="guests" name="guests">
+                <option value="">Select</option>
+                <option>1–4</option>
+                <option>5–8</option>
+                <option>9–12</option>
+                <option>13–15</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="service">Charter Type</label>
+              <select id="service" name="service">
+                <option value="">Select</option>
+                <option>Tubing</option>
+                <option>Wakeboarding</option>
+                <option>Sightseeing Cruise</option>
+                <option>Party / Event</option>
+                <option>Dinner Cruise</option>
+                <option>Fishing Charter</option>
+                <option>Mixed / Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="date">Preferred Date</label>
+            <input type="date" id="date" name="date" />
+          </div>
+          <div class="form-group">
+            <label for="message">Anything else?</label>
+            <textarea id="message" name="message" placeholder="Tell us about your group, any special requests, etc."></textarea>
+          </div>
+          <button type="submit" class="form-submit">Send Booking Request</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">Idol<span>Boat</span>Charters</div>
+  <p>Lake Norman, North Carolina</p>
+  <p style="margin-top:.2rem"><a href="mailto:davididol@idolboatcharters.com" style="color:var(--gold);text-decoration:none;">davididol@idolboatcharters.com</a></p>
+  <div class="footer-links">
+    <a href="#home">Home</a>
+    <a href="#services">Services</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#contact">Book Now</a>
+  </div>
+  <p style="margin-top:1.5rem;font-size:.78rem;">© 2025 Idol Boat Charters · All rights reserved</p>
+</footer>
+
+<script>
+  // Sticky nav
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Hero slideshow
+  const slides = document.querySelectorAll('.hero-slide');
+  let cur = 0;
+  setInterval(() => {
+    slides[cur].classList.remove('active');
+    cur = (cur + 1) % slides.length;
+    slides[cur].classList.add('active');
+  }, 5000);
+
+  // Smooth scroll for anchors
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
