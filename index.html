@@ -68,6 +68,38 @@
     }
     .nav-logo span { color: var(--gold); }
 
+    .nav-logo-wrap { display: flex; flex-direction: column; gap: .4rem; text-decoration: none; }
+
+    .temp-widget {
+      display: inline-flex; flex-direction: column; gap: 0;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 10px;
+      overflow: hidden;
+      width: fit-content;
+      min-width: 170px;
+    }
+    .temp-row {
+      display: flex; align-items: center; gap: .5rem;
+      padding: .38rem .75rem;
+      font-size: .88rem; font-weight: 600;
+      color: rgba(255,255,255,.95);
+      letter-spacing: .02em;
+    }
+    .temp-row + .temp-row {
+      border-top: 1px solid rgba(255,255,255,.12);
+    }
+    .temp-row .temp-icon { font-size: 1rem; flex-shrink: 0; }
+    .temp-row .temp-label { font-size: .7rem; font-weight: 500; color: rgba(255,255,255,.6); margin-right: auto; text-transform: uppercase; letter-spacing: .06em; }
+    .temp-row .temp-val { font-size: .95rem; font-weight: 700; color: #fff; }
+    .temp-row .temp-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .temp-row.lake .temp-dot { background: #4dd9ff; box-shadow: 0 0 6px #4dd9ff; }
+    .temp-row.air  .temp-dot { background: #ffca5c; box-shadow: 0 0 6px #ffca5c; }
+    .temp-widget.loading { opacity: .6; }
+
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a {
       color: rgba(255,255,255,.82);
@@ -503,7 +535,21 @@
 
 <!-- ── NAV ── -->
 <nav id="navbar">
-  <a href="#" class="nav-logo">Idol<span>Boat</span>Charters</a>
+  <div class="nav-logo-wrap">
+    <a href="#" class="nav-logo">Idol<span>Boat</span>Charters</a>
+    <div class="temp-widget loading" id="tempWidget">
+      <div class="temp-row lake">
+        <span class="temp-dot"></span>
+        <span class="temp-label">Lake Temp</span>
+        <span class="temp-val" id="tempLake">--°F</span>
+      </div>
+      <div class="temp-row air">
+        <span class="temp-dot"></span>
+        <span class="temp-label">Outside</span>
+        <span class="temp-val" id="tempAir">--°F</span>
+      </div>
+    </div>
+  </div>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
     <li><a href="#features">The Boat</a></li>
@@ -800,6 +846,41 @@
     cur = (cur + 1) % slides.length;
     slides[cur].classList.add('active');
   }, 5000);
+
+  // Live temps — USGS for lake water, Open-Meteo for air (Lake Norman coords)
+  async function fetchTemps() {
+    const widget = document.getElementById('tempWidget');
+
+    // Water temp — USGS station 02142900 (Lake Norman near Terrell, NC)
+    fetch('https://waterservices.usgs.gov/nwis/iv/?sites=02142900&parameterCd=00010&format=json&siteStatus=active')
+      .then(r => r.json())
+      .then(data => {
+        const series = data?.value?.timeSeries;
+        if (series && series.length > 0) {
+          const vals = series[0].values[0].value;
+          if (vals && vals.length > 0) {
+            const tempF = (parseFloat(vals[vals.length - 1].value) * 9/5 + 32).toFixed(1);
+            document.getElementById('tempLake').textContent = `${tempF}°F`;
+          }
+        }
+      })
+      .catch(() => { document.getElementById('tempLake').textContent = 'N/A'; });
+
+    // Air temp — Open-Meteo (Lake Norman: 35.57°N, -80.88°W)
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=35.57&longitude=-80.88&current=temperature_2m&temperature_unit=fahrenheit&forecast_days=1')
+      .then(r => r.json())
+      .then(data => {
+        const tempF = data?.current?.temperature_2m;
+        if (tempF != null) {
+          document.getElementById('tempAir').textContent = `${tempF.toFixed(1)}°F`;
+        }
+      })
+      .catch(() => { document.getElementById('tempAir').textContent = 'N/A'; });
+
+    widget.classList.remove('loading');
+  }
+  fetchTemps();
+  setInterval(fetchTemps, 15 * 60 * 1000); // refresh every 15 min
 
   // Smooth scroll for anchors
   document.querySelectorAll('a[href^="#"]').forEach(a => {
