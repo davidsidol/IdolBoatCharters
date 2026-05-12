@@ -851,8 +851,8 @@
   async function fetchTemps() {
     const widget = document.getElementById('tempWidget');
 
-    // Water temp — USGS station 02142900 (Lake Norman near Terrell, NC)
-    fetch('https://waterservices.usgs.gov/nwis/iv/?sites=02142900&parameterCd=00010&format=json&siteStatus=active')
+    // Water temp — USGS station 0214264790 (Catawba River at Cowan's Ford, Lake Norman)
+    fetch('https://waterservices.usgs.gov/nwis/iv/?sites=0214264790&parameterCd=00010&format=json&siteStatus=active')
       .then(r => r.json())
       .then(data => {
         const series = data?.value?.timeSeries;
